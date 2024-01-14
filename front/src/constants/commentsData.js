@@ -23,16 +23,4 @@ export const dummyComments = [
     rating: 2,
     created_at: "2018-07-11",
   },
-  {
-    username: "john doe",
-    comment: "did not like",
-    rating: 1,
-    created_at: "2018-07-11",
-  },
-  {
-    username: "john doe",
-    comment: "did not like",
-    rating: 1,
-    created_at: "2018-07-11",
-  },
 ];

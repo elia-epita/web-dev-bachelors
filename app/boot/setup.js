@@ -21,6 +21,7 @@ const usersRoutes = require("../routes/users.routes");
 const profileRoutes = require("../routes/profile.routes");
 const moviesRoutes = require("../routes/movies.routes");
 const ratingRoutes = require("../routes/rating.routes");
+const commentsRoutes = require("../routes/comments.routes");
 
 try {
   mongoose.connect("mongodb://localhost:27017/epita");
@@ -64,6 +65,7 @@ const registerCoreMiddleWare = async () => {
     app.use("/profile", profileRoutes);
     app.use("/movies", moviesRoutes);
     app.use("/ratings", ratingRoutes);
+    app.use("/comments", commentsRoutes);
 
     // 404 handling for not found
     app.use(notFound);

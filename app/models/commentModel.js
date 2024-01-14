@@ -14,6 +14,10 @@ const commentSchema = new mongoose.Schema(
       type: String,
       required: [true, "comment is required"],
     },
+    title: {
+      type: String,
+      required: [true, "title is required"],
+    },
     rating: {
       type: Number,
       min: 0,

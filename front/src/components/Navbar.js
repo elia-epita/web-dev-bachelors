@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Navbar.css";
 import { useNavigate } from "react-router-dom";
+import useAppStateContext from "../hooks/useAppStateContext";
 
 const Navbar = () => {
+  const { dispatch } = useAppStateContext();
+
   const [show, setShow] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
   const navigate = useNavigate();
@@ -25,8 +28,10 @@ const Navbar = () => {
   };
 
   const handleLogout = (event) => {
-    // here we apply the log out logic
-    
+    event.preventDefault();
+    dispatch({
+      type: "Logout",
+    });
     navigate("/login");
   };
 

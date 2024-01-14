@@ -80,7 +80,9 @@ const login = async (req, res) => {
                 expiresIn: "1h",
               }
             );
-            res.status(statusCodes.success).json({ token });
+            res
+              .status(statusCodes.success)
+              .json({ token, username: rows.rows[0].username });
           } else {
             res
               .status(statusCodes.notFound)

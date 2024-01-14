@@ -27,7 +27,7 @@ const Comment = ({ comment }) => {
   return (
     <div className="comment">
       <div className="comment-box">
-        <div className="comment-title">{comment.comment}</div>
+        <div className="comment-title">{comment.title}</div>
         <div className="comment-text">{comment.comment}</div>
         <div className="comment-footer">
           <div className="comment-info">

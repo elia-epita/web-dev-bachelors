@@ -1,36 +1,29 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import React, { useEffect } from "react";
 import Banner from "../components/Banner";
+import Navbar from "../components/Navbar";
 import Row from "../components/Row";
-import axios from "../constants/axios";
-import { requests } from "../constants/requests";
+import {
+  getMovies,
+  getMoviesErrors,
+  getMoviesStatus,
+  selectAllMovies,
+} from "../features/movie/movieSlice";
+import { useDispatch, useSelector } from "react-redux";
+import useApi from "../hooks/useApi";
 
 const HomePage = () => {
-  const [movies, setMovies] = useState({
-    "Top Rated": [],
-    Trending: [],
-    Horror: [],
-    Romance: [],
-    Comedy: [],
-    "Netflix Originals": [],
-    Documentaries: [],
-  });
+  const dispatch = useDispatch();
+
+  const { data } = useApi("http://localhost:8080/movies");
+  console.log(data);
+  const movies = useSelector(selectAllMovies);
+  const status = useSelector(getMoviesStatus);
 
   useEffect(() => {
-    const fetchData = () => {
-      const request = axios
-        .get(requests.fetchAllMovies)
-        .then((movies) => {
-          console.log(movies.data);
-          setMovies(movies.data.movies);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      return request;
-    };
-    fetchData();
-  }, []);
+    if (status === "idle") {
+      dispatch(getMovies());
+    }
+  }, [dispatch, status]);
 
   return (
     <div
@@ -39,7 +32,11 @@ const HomePage = () => {
     >
       <Navbar />
       <Banner />
-      <Row title="Netflix Originals" movies={movies["Netflix Originals"]} isLarge={true}/>
+      <Row
+        title="Netflix Originals"
+        movies={movies["Netflix Originals"]}
+        isLarge={true}
+      />
       <Row title="Top Rated" movies={movies["Top Rated"]} />
       <Row title="Trending" movies={movies.Trending} />
       <Row title="Horror" movies={movies.Horror} />

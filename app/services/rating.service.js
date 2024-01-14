@@ -2,7 +2,6 @@ const pool = require("../boot/database/db_connect");
 const logger = require("../middleware/winston");
 const statusCodes = require("../constants/statusCodes");
 const ratingModel = require("../models/ratingModel");
-const { error } = require("winston");
 
 const addRating = async (req, res) => {
   const { movieId } = req.params;

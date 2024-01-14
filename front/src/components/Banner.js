@@ -1,7 +1,7 @@
 import movieTrailer from "movie-trailer";
 import React, { useEffect, useState } from "react";
-import axios from "../constants/axios";
 import Youtube from "react-youtube";
+import axios from "../constants/axios";
 import { requests } from "../constants/requests";
 import "../styles/Banner.css";
 
@@ -13,19 +13,29 @@ const opts = {
   },
 };
 
-const Banner = () => {
-  const [movie, setMovie] = useState({
-    backdrop_poster: "",
-    title: "",
-    overview: "",
-    release_date: "",
-  });
+const Banner = ({ movieDetails }) => {
+  const [movie, setMovie] = useState(
+    movieDetails
+      ? movieDetails
+      : {
+          backdrop_poster: "",
+          title: "",
+          overview: "",
+          release_date: "",
+        }
+  );
   const [trailerURL, setTrailerURL] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       const request = axios
-        .get(requests.fetchNetflixOriginals)
+        .get(requests.fetchNetflixOriginals, {
+          headers: {
+            Authorization: `Bearer ${
+              JSON.parse(localStorage.getItem("user")).token
+            }`,
+          },
+        })
         .then((response) => {
           setMovie(
             response.data.movies[
@@ -39,8 +49,10 @@ const Banner = () => {
       return request;
     };
 
-    fetchData();
-  }, []);
+    if (!movieDetails) {
+      fetchData();
+    }
+  }, [movieDetails]);
 
   const truncate = (str, nbr) => {
     return str?.length > nbr ? str.substr(0, nbr - 1) + "..." : str;
